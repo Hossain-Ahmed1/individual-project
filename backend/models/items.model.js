@@ -6,16 +6,16 @@ const itemSchema = new mongoose.Schema({
         required: true
     },
     quantity:{
-        type:String,
+        type:Number,
         required: true
     },
     owner:{
-        type:ObjectId,
-        required:true
+        type:mongoose.ObjectId,
+        default: null
     },
-    image:{
-        type: String,
-        required: true
+    image: {
+        type:String,
+        default: ""
     },
 }, {
         timestamps: true
