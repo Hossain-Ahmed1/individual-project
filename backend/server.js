@@ -4,6 +4,7 @@ import itemRouter from './routes/items.route.js'
 
 
 const app = express()
+const PORT = process.env.PORT || 5000
 
 app.use(express.json()) // allows to accept json data in the body
 
@@ -13,7 +14,7 @@ app.get("/", (req,res)=>{
 
 app.use("/api/items",itemRouter)
 
-app.listen(5000, () =>{
+app.listen(PORT, () =>{
     connectDB()
     
     console.log("Server running at port 5000")
