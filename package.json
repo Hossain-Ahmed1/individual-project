@@ -4,17 +4,23 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "node backend/server.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Hossain-Ahmed1/individual-project.git"
   },
+  "type": "module",
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Hossain-Ahmed1/individual-project/issues"
   },
-  "homepage": "https://github.com/Hossain-Ahmed1/individual-project#readme"
+  "homepage": "https://github.com/Hossain-Ahmed1/individual-project#readme",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^5.1.0",
+    "mongoose": "^8.13.2"
+  }
 }
