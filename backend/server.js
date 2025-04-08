@@ -2,7 +2,6 @@ import express from 'express'
 import { connectDB } from './config/db.js'
 import itemRouter from './routes/items.route.js'
 
-
 const app = express()
 const PORT = process.env.PORT || 5000
 

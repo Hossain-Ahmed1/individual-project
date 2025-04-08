@@ -1,7 +1,8 @@
-import { Button, Container, Flex, HStack, Text } from '@chakra-ui/react'
+import { Button, Container, Flex, HStack, Text} from '@chakra-ui/react'
 import React from 'react'
 import { BsMoon, BsPlusSquare, BsSun } from 'react-icons/bs'
 import { Link } from 'react-router-dom'
+import SearchBar from './SearchBar'
 import { useColorMode } from './ui/color-mode'
 
 const Navbar = () => {
@@ -25,12 +26,16 @@ const {colorMode, toggleColorMode} = useColorMode()
                 textAlign={"center"}
             
             ><Link to={"/"}>Barter App</Link></Text>
+
+            <SearchBar/>
+
             <HStack spacing={2} alignItem ={"center"}>
                 <Link to={"/create"}>
                     <Button>
                         <BsPlusSquare fontSize={20}/>
                     </Button>
                 </Link>
+
                <Button onClick={toggleColorMode}>
                     {colorMode === "light" ? <BsMoon /> : <BsSun />}
                 </Button>
