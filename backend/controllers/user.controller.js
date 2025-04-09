@@ -14,7 +14,7 @@ export const getUsers = async (req,res) =>{
 //get one
 export const getUser = async (req,res) =>{
     const {id} = req.params
-
+    
     if (!mongoose.Types.ObjectId.isValid(id)){
         return res.status(404).json({sucess: false, message:"invalid user Id"})
     }
@@ -29,9 +29,12 @@ export const getUser = async (req,res) =>{
 //create one
 export const createUser = async (req,res) =>{
     const user = req.body
-
     if (!user.name || !user.password ||  !user.email){
         return res.status(400).json({success:false, message: "please provide all fields"})
+    }
+    const takenEmail = await User.findOne({email: req.body.email}).exec()
+    if (takenEmail) {
+        return res.status(400).json({sucess: false,message: "The email is taken: " })
     }
     const newUser = new User(user)
     try{

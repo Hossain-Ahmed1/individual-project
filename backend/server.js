@@ -1,4 +1,5 @@
 import express from 'express'
+import cors from 'cors'
 import { connectDB } from './config/db.js'
 import itemRouter from './routes/items.route.js'
 import userRouter from './routes/user.route.js'
@@ -11,7 +12,7 @@ app.use(express.json()) // allows to accept json data in the body
 app.get("/", (req,res)=>{
     res.send("server is ready")
 })
-
+app.use(cors())
 app.use("/api/items",itemRouter)
 app.use("/api/users",userRouter)
 
