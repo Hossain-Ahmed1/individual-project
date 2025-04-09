@@ -1,5 +1,15 @@
 import User from "../models/users.model.js";
 import mongoose from "mongoose";
+import bcrypt from "bcrypt"
+
+//validate email for stack overflow
+const validateEmail = (email) => {
+    return String(email)
+      .toLowerCase()
+      .match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      )
+  }
 
 //get all
 export const getUsers = async (req,res) =>{
@@ -31,6 +41,9 @@ export const createUser = async (req,res) =>{
     const user = req.body
     if (!user.name || !user.password ||  !user.email){
         return res.status(400).json({success:false, message: "please provide all fields"})
+    }
+    if (!validateEmail(user.email)){
+        return res.status(400).json({success:false, message: "please provide valid email"})
     }
     const takenEmail = await User.findOne({email: req.body.email}).exec()
     if (takenEmail) {
@@ -77,5 +90,26 @@ export const deleteUser = async (req,res) =>{
         res.status(200).json({success: true, message:"deleted"})
     }catch (err){
         res.status(500).json({sucess:false, message: "server error"})
+    }
+}
+//login
+export const login = async (req,res) =>{
+    const userCred = req.body
+
+    if ( !userCred.password ||  !userCred.email){
+        return res.status(400).json({success:false, message: "please provide all fields"})
+    }
+    const user = await User.findOne({email: userCred.email}).exec()
+    if (user){
+        const confirm = await bcrypt.compare(userCred.password, user.password)
+        if (confirm){
+            return res.status(200).json({sucess:true, data:user})
+        }else{
+            return res.status(401).json({sucess:false, message: "incorrect password"})
+        }
+    }
+    else{
+        return res.status(400).json({success:false, message: "User does not exist"})
+
     }
 }
