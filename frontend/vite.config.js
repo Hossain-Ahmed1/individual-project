@@ -5,10 +5,6 @@ import tsconfigPaths from "vite-tsconfig-paths"
 export default defineConfig({
   plugins: [react(), tsconfigPaths()],
 	server: {
-		proxy: {
-			"/api": {
-				target: "http://localhost:5000",
-			},
-		},
+		allowedHosts:["ad53-2a02-c7c-5181-e300-1cfa-971e-484f-9ca.ngrok-free.app"]
 	},
 })
