@@ -1,7 +1,10 @@
 import User from "../models/users.model.js";
 import mongoose from "mongoose";
 import bcrypt from "bcrypt"
+import jsonwebtoken  from "jsonwebtoken"
+import dotenv from 'dotenv'
 
+dotenv.config()
 //validate email for stack overflow
 const validateEmail = (email) => {
     return String(email)
@@ -103,7 +106,8 @@ export const login = async (req,res) =>{
     if (user){
         const confirm = await bcrypt.compare(userCred.password, user.password)
         if (confirm){
-            return res.status(200).json({sucess:true, data:user})
+            const token = jsonwebtoken.sign({id : user.id},process.env.SECRETKEY,{expiresIn:"1h"})
+            return res.status(200).json({sucess:true, data: token})
         }else{
             return res.status(401).json({sucess:false, message: "incorrect password"})
         }

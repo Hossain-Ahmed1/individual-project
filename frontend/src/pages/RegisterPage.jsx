@@ -1,9 +1,21 @@
 import { registerUser } from '@/api/User'
 import { Box, Container, Input, Heading, VStack, Button,Text } from '@chakra-ui/react'
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState,useEffect } from 'react'
+import { Link,useNavigate } from 'react-router-dom'
+
 
 const RegisterPage = () => {
+  const nav = useNavigate()
+  useEffect(()=>{
+    const checkSession = () =>{
+      const token = sessionStorage.getItem("User")
+      if (token){
+        nav("/profile")
+      }
+    }
+    checkSession()
+  },[])
+
   const [user,setUser] = useState({
     name: "",
     email: "",

@@ -1,9 +1,20 @@
 import { loginUser, registerUser } from '@/api/User'
 import { Box, Container, Input, Heading, VStack, Button,Text } from '@chakra-ui/react'
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { useNavigate } from "react-router-dom"
+
 
 const LoginPage = () => {
+  const navigate = useNavigate()
+    useEffect(()=>{
+      const checkSession = () =>{
+        const token = sessionStorage.getItem("User")
+        if (token){
+          navigate("/profile")
+        }
+      }
+      checkSession()
+    },[])
     const [user,setUser] = useState({
         email: "",
         password: ""
@@ -14,13 +25,15 @@ const LoginPage = () => {
       }
     const handleLogin = async () =>{
         
-        const testUser = 
-        {
-            "email": "ho@4.com",
-            "password": "123"
-          }
-        const response = await loginUser(testUser)
-        console.log(response.data.data.name)
+        const response = await loginUser(user)
+        if (response?.status === 200){
+          alert("logged in")
+          sessionStorage.setItem("User", response.data.data)
+          navigate("/home")
+          axios.defaults.headers.common["Authorization"] = `Bearer ${response}`
+        }else if (response?.status){
+          alert(response.data.message)
+        }
     }
   return (
         <Container>

@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar"
 import SearchPage from "./pages/SearchPAge"
 import RegisterPage from "./pages/RegisterPage"
 import LoginPage from "./pages/LoginPage"
+import ProfilePage from "./pages/ProfilePage"
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
         <Route path="/search/:item" element = {<SearchPage />}/>
         <Route path="/register" element={<RegisterPage />}/>
         <Route path="/login" element={<LoginPage />}/>
+        <Route path="/profile" element={<ProfilePage />} />
         </Route>
         <Route>
         </Route>
