@@ -1,11 +1,22 @@
 import { Button, Container, Flex, HStack, Text} from '@chakra-ui/react'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, Outlet} from 'react-router-dom'
 import SearchBar from './SearchBar'
 import { LuUser } from 'react-icons/lu'
 
 const Navbar = () => {
-
+    const [session,setSession] = useState(0)
+        useEffect(()=>{
+          const checkSession = () =>{
+            const token = sessionStorage.getItem("User")
+            if (token){
+                setSession(1)
+            }else{
+                setSession(0)
+            }
+          }
+          return () => checkSession()
+    },[])
   return (
     <>
     <Container maxW={"1140px"} px={4}>

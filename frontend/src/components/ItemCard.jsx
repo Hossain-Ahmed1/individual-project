@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Card,Heading,Text } from '@chakra-ui/react'
 
 const itemCard = ({item}) => {
@@ -9,7 +9,7 @@ const itemCard = ({item}) => {
             <Heading size="md">{item.name}</Heading>
         </Card.Header>
         <Card.Body color="fg.muted">
-            quantity {item.quantity}
+            {item.desc}
         </Card.Body>
         <Card.Footer gap="2">
         <Text textStyle="xs">{new Date(item.createdAt).toString().slice(4,15)}</Text>

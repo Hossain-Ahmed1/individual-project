@@ -27,11 +27,10 @@ const LoginPage = () => {
         
         const response = await loginUser(user)
         if (response?.status === 200){
-          alert("logged in")
           sessionStorage.setItem("User", response.data.data)
           navigate("/home")
           axios.defaults.headers.common["Authorization"] = `Bearer ${response}`
-        }else if (response?.status){
+        }else if (response.status){
           alert(response.data.message)
         }
     }

@@ -5,13 +5,12 @@ const itemSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    quantity:{
-        type:Number,
-        required: true
-    },
     owner:{
         type:mongoose.ObjectId,
         default: null
+    },desc:{
+        type:String,
+        default:""
     },
     image: {
         type:String,

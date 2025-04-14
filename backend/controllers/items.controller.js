@@ -14,7 +14,7 @@ export const getItems = async (req,res) =>{
 export const createItem = async(req,res) =>{
     const item = req.body
 
-    if (!item.name || !item.quantity ){
+    if (!item.name ){
         return res.status(400).json({success:false, message: "please provide all fields"})
     }
 
@@ -56,7 +56,7 @@ export const deleteItem = async(req,res) =>{
 
     try{
         await Item.findByIdAndDelete(id)
-        res.status(200).json({sucess:true, message:"test"})
+        res.status(200).json({sucess:true, message:"item deleted"})
     }catch(err){
         res.status(500).json({success: false, message:"Server Error"})
     }
