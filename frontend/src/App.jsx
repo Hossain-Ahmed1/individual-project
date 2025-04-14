@@ -9,6 +9,7 @@ import LoginPage from "./pages/LoginPage"
 import ProfilePage from "./pages/ProfilePage"
 import UserPage from "./pages/UserPage"
 import ItemPage from "./pages/ItemPage"
+import TradingPage from "./pages/TradingPage"
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/user/:id" element={<UserPage />} />
         <Route path="/item/:id" element={<ItemPage />} />
+        <Route path="/trade/:id" element={<TradingPage />} />
         </Route>
         <Route>
         </Route>

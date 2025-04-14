@@ -1,13 +1,15 @@
-import { Button, Container, Tabs, Flex,For } from '@chakra-ui/react'
+import { Button, Container, Tabs, Flex,For, Heading } from '@chakra-ui/react'
 import React, { useEffect,useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { deleteItem, fetchItems } from '@/api/Item'
 import { jwtDecode } from 'jwt-decode'
 import ItemCard from '../components/ItemCard'
+import { fetchUser } from '@/api/User'
 
 const ProfilePage = () => {
     const navigate = useNavigate()
     const [items, setItems] = useState([])
+    const [user,setUser] = useState('')
     useEffect(() =>{
         const checkSession = () => {
             const token = sessionStorage.getItem("User")
@@ -18,7 +20,8 @@ const ProfilePage = () => {
     async function fetchData() {
           const data = await fetchItems()
           setItems(data.filter((item) => item.owner == jwtDecode(sessionStorage.getItem("User")).id))
-          console.log(items)
+          const username = await fetchUser(jwtDecode(sessionStorage.getItem("User")).id)
+          setUser(username)
         }
         checkSession()
         fetchData()
@@ -44,6 +47,7 @@ const ProfilePage = () => {
 
   return (
     <Container >
+      <Heading>Profile: {user}</Heading>
         <Tabs.Root lazyMount unmountOnExit defaultValue="tab-1">
       <Tabs.List>
       <Flex gap="4" justifyContent="space-between">
