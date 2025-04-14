@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react'
 import { Card,Heading,Text } from '@chakra-ui/react'
+import { Link } from 'react-router-dom'
 
 const itemCard = ({item}) => {
 
   return (
     <Card.Root size="md">
         <Card.Header>
-            <Heading size="md">{item.name}</Heading>
+            <Heading size="md"><Link to={"/item/"+item._id}>{item.name}</Link></Heading>
         </Card.Header>
         <Card.Body color="fg.muted">
             {item.desc}

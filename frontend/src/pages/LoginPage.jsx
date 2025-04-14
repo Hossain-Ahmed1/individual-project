@@ -2,6 +2,7 @@ import { loginUser, registerUser } from '@/api/User'
 import { Box, Container, Input, Heading, VStack, Button,Text } from '@chakra-ui/react'
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from "react-router-dom"
+import axios from 'axios'
 
 
 const LoginPage = () => {

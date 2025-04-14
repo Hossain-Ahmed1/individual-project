@@ -11,6 +11,23 @@ export const getItems = async (req,res) =>{
     }
 }
 
+//get one
+export const getItem = async (req,res) =>{
+    const {id} = req.params
+    
+    
+    if (!mongoose.Types.ObjectId.isValid(id)){
+        return res.status(404).json({sucess: false, message:"invalid item Id"})
+    }
+    try{
+        const item = await Item.findById(id)
+        res.status(200).json({success: true, data:item})
+    }catch(err){
+        console.log("error in fetching item: ", err.message)
+        res.status(500).json({success:false, message:"Server Error"})
+    }
+}
+
 export const createItem = async(req,res) =>{
     const item = req.body
 

@@ -33,7 +33,7 @@ export const getUser = async (req,res) =>{
     }
     try{
         const user = await User.findById(id)
-        res.status(200).json({success: true, data:user})
+        res.status(200).json({success: true, data:user.name})
     }catch(err){
         console.log("error in fetching users: ", err.message)
         res.status(500).json({success:false, message:"Server Error"})

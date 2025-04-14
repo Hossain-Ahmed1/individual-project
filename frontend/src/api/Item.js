@@ -12,7 +12,8 @@ export const createItem = async(item) =>{
     return response
 }
 export const fetchItem = async(id)=>{
-    
+    const response = await axios.get(`${URL}/api/items/${id}`)
+    return response
 }
 
 export const deleteItem = async(id) =>{

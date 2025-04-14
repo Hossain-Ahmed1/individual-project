@@ -59,10 +59,10 @@ const ProfilePage = () => {
         <Container m={4} p={4} height="dvh">
         <For each={items} >
               {(item, index) =>
-              <>
-              <ItemCard key={item._id} item = {item}/>
+              <Container key={item._id}>
+              <ItemCard  item = {item}/>
               <Button onClick={()=>handleDelete(item._id)}>Delete</Button>
-              </> 
+              </Container> 
               }
         </For>
         </Container>
