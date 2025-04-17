@@ -5,11 +5,15 @@ import { deleteItem, fetchItems } from '@/api/Item'
 import { jwtDecode } from 'jwt-decode'
 import ItemCard from '../components/ItemCard'
 import { fetchUser } from '@/api/User'
+import { getTradeoffers } from '@/api/Tradeoffer'
+import OfferCard from '@/components/OfferCard'
 
 const ProfilePage = () => {
     const navigate = useNavigate()
     const [items, setItems] = useState([])
     const [user,setUser] = useState('')
+    const [sentOffers,setSentOffers] = useState([])
+    const [recievingOffers,setRecievingOffers] = useState([])
     useEffect(() =>{
         const checkSession = () => {
             const token = sessionStorage.getItem("User")
@@ -17,14 +21,20 @@ const ProfilePage = () => {
               navigate("/login")
             }
         }
-    async function fetchData() {
+      async function fetchData() {
           const data = await fetchItems()
           setItems(data.filter((item) => item.owner == jwtDecode(sessionStorage.getItem("User")).id))
           const username = await fetchUser(jwtDecode(sessionStorage.getItem("User")).id)
           setUser(username)
         }
-        checkSession()
-        fetchData()
+      const fetchOffers = async () => {
+        const data = await getTradeoffers()
+        setSentOffers(data.filter(offer => offer.sender == jwtDecode(sessionStorage.getItem("User")).id))
+        setRecievingOffers(data.filter(offer => offer.reciever == jwtDecode(sessionStorage.getItem("User")).id))
+      }
+      checkSession()
+      fetchData()
+      fetchOffers()
     },[])
 
     function handleLogout(){
@@ -52,10 +62,10 @@ const ProfilePage = () => {
       <Tabs.List>
       <Flex gap="4" justifyContent="space-between">
         <Tabs.Trigger value="tab-1">My Items</Tabs.Trigger>
-        <Tabs.Trigger value="tab-2">Tab 2</Tabs.Trigger>
-        <Tabs.Trigger value="tab-3">Tab 3</Tabs.Trigger>
+        <Tabs.Trigger value="tab-2">Sent offers</Tabs.Trigger>
+        <Tabs.Trigger value="tab-3">recieving offers</Tabs.Trigger>
         <Link to={"/add"}>
-        <Button marginEnd="auto">Add ITem</Button>
+        <Button marginEnd="auto">Add Item</Button>
         </Link>
         </Flex>
       </Tabs.List>
@@ -72,10 +82,26 @@ const ProfilePage = () => {
         </Container>
       </Tabs.Content>
       <Tabs.Content value="tab-2">
-        Tab 2: Content 
+      <Container m={4} p={4} height="dvh">
+        <For each={sentOffers} >
+              {(offer, index) =>
+              <Container key={offer._id}>
+                <OfferCard offer={offer} />
+              </Container> 
+              }
+        </For>
+        </Container>
       </Tabs.Content>
       <Tabs.Content value="tab-3">
-        Tab 3: Content 
+      <Container m={4} p={4} height="dvh">
+        <For each={recievingOffers} >
+              {(offer, index) =>
+              <Container key={offer._id}>
+                <OfferCard offer={offer} />
+              </Container> 
+              }
+        </For>
+        </Container>
       </Tabs.Content>
     </Tabs.Root>
         <Button m={8} onClick={handleLogout}>Logout</Button>

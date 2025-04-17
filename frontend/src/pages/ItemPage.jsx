@@ -38,7 +38,7 @@ const ItemPage = () => {
                 uploaded at: {new Date(item.createdAt).toString().slice(4,15)} | uploaded by: <Link to={"/user/" + item.owner}>{user}</Link>
             </Card.Footer>
         </Card.Root>
-        {!session?<Button>trade with user</Button>:<></>}
+        {!session?<Link to={"/trade/"+item.owner}><Button>trade with user</Button></Link>:<></>}
     </Container>
   )
 }

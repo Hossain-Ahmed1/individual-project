@@ -2,7 +2,7 @@ import { fetchItems } from '@/api/Item'
 import { fetchUser } from '@/api/User'
 import { Container, For, Heading, VStack, Text, Button } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import ItemCard from '@/components/ItemCard'
 import { jwtDecode } from 'jwt-decode'
 
@@ -33,7 +33,7 @@ const UserPage = () => {
     <Container>
       <VStack>
       <Heading m={4}>User: {user.name}</Heading>
-      {!session?<Button>trade with user</Button>:<></>}
+      {!session?<Link to={"/trade/"+user.id}><Button>trade with user</Button></Link>:<></>}
       <Text>Items: </Text>
       <For each={items} >
               {(item, index) =>

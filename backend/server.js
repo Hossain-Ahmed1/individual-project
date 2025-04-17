@@ -3,6 +3,7 @@ import cors from 'cors'
 import { connectDB } from './config/db.js'
 import itemRouter from './routes/items.route.js'
 import userRouter from './routes/user.route.js'
+import tradeofferRouter from './routes/tradeoffer.route.js'
 
 const app = express()
 const PORT = process.env.PORT || 5000
@@ -15,6 +16,7 @@ app.get("/", (req,res)=>{
 app.use(cors())
 app.use("/api/items",itemRouter)
 app.use("/api/users",userRouter)
+app.use("/api/trade",tradeofferRouter)
 
 app.listen(PORT, () =>{
     connectDB()
