@@ -10,9 +10,12 @@ import ProfilePage from "./pages/ProfilePage"
 import UserPage from "./pages/UserPage"
 import ItemPage from "./pages/ItemPage"
 import TradingPage from "./pages/TradingPage"
+import LiveTradePage from "./pages/LiveTradePage"
+import {io} from "socket.io-client"
+import { URL } from "./api/congig"
 
 function App() {
-
+  const socket = io(URL)
 
   return (
     <Box minH={"100vh"}>
@@ -27,6 +30,7 @@ function App() {
         <Route path="/user/:id" element={<UserPage />} />
         <Route path="/item/:id" element={<ItemPage />} />
         <Route path="/trade/:id" element={<TradingPage />} />
+        <Route path="/livetrade/:id" element={<LiveTradePage socket={socket}/>}/>
         </Route>
         <Route>
         </Route>

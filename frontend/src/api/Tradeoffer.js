@@ -10,3 +10,8 @@ export const getTradeoffers =  async() => {
     const data = response.data.data
     return data
 }
+
+export const deleteTradeoffer = async(id) => {
+    const response = await axios.delete(`${URL}/api/trade/${id}`,id)
+    return response
+}

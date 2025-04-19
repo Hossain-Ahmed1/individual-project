@@ -1,12 +1,14 @@
-import { Button, Container, Tabs, Flex,For, Heading } from '@chakra-ui/react'
+import { Button, Container, Tabs, Flex,For, Heading, HStack } from '@chakra-ui/react'
 import React, { useEffect,useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { deleteItem, fetchItems } from '@/api/Item'
 import { jwtDecode } from 'jwt-decode'
 import ItemCard from '../components/ItemCard'
 import { fetchUser } from '@/api/User'
-import { getTradeoffers } from '@/api/Tradeoffer'
+import { deleteTradeoffer, getTradeoffers } from '@/api/Tradeoffer'
 import OfferCard from '@/components/OfferCard'
+import { getLivetrades } from '@/api/Livetrade'
+import InviteCard from '@/components/InviteCard'
 
 const ProfilePage = () => {
     const navigate = useNavigate()
@@ -14,6 +16,7 @@ const ProfilePage = () => {
     const [user,setUser] = useState('')
     const [sentOffers,setSentOffers] = useState([])
     const [recievingOffers,setRecievingOffers] = useState([])
+    const [invites,setInvites] = useState([])
     useEffect(() =>{
         const checkSession = () => {
             const token = sessionStorage.getItem("User")
@@ -32,9 +35,14 @@ const ProfilePage = () => {
         setSentOffers(data.filter(offer => offer.sender == jwtDecode(sessionStorage.getItem("User")).id))
         setRecievingOffers(data.filter(offer => offer.reciever == jwtDecode(sessionStorage.getItem("User")).id))
       }
+      const fetchInvites = async () => {
+        const data = await getLivetrades()
+        setInvites(data.filter(live => live.invited == jwtDecode(sessionStorage.getItem("User")).id))
+      }
       checkSession()
       fetchData()
       fetchOffers()
+      fetchInvites()
     },[])
 
     function handleLogout(){
@@ -54,6 +62,12 @@ const ProfilePage = () => {
       }
     }
 
+    const handleDeleteOffer = async(id) => {
+      const response = await deleteTradeoffer(id)
+      setSentOffers(sentOffers.filter(offer => offer._id !== id))
+      setRecievingOffers(recievingOffers.filter(offer => offer._id !== id))
+    }
+
 
   return (
     <Container >
@@ -64,6 +78,7 @@ const ProfilePage = () => {
         <Tabs.Trigger value="tab-1">My Items</Tabs.Trigger>
         <Tabs.Trigger value="tab-2">Sent offers</Tabs.Trigger>
         <Tabs.Trigger value="tab-3">recieving offers</Tabs.Trigger>
+        <Tabs.Trigger value="tab-4">invites</Tabs.Trigger>
         <Link to={"/add"}>
         <Button marginEnd="auto">Add Item</Button>
         </Link>
@@ -87,6 +102,7 @@ const ProfilePage = () => {
               {(offer, index) =>
               <Container key={offer._id}>
                 <OfferCard offer={offer} />
+                <Button onClick={() => handleDeleteOffer(offer._id)}>Delete offer</Button>
               </Container> 
               }
         </For>
@@ -98,10 +114,27 @@ const ProfilePage = () => {
               {(offer, index) =>
               <Container key={offer._id}>
                 <OfferCard offer={offer} />
+                <HStack>
+                  <Button onClick={() => handleDeleteOffer(offer._id)}>refuse offer</Button>
+                  <Link to={"/trade/"+offer.sender}><Button>Counter offer</Button></Link>
+                </HStack>
               </Container> 
               }
         </For>
         </Container>
+      </Tabs.Content>
+      <Tabs.Content value='tab-4'>
+      <Container m={4} p={4} height="dvh">
+              <For each={invites}>
+                {
+                (invite, index) =>
+                  <Container key={invite._id}>
+                    <InviteCard invite={invite} />
+                  </Container>
+                }
+
+              </For>
+      </Container>
       </Tabs.Content>
     </Tabs.Root>
         <Button m={8} onClick={handleLogout}>Logout</Button>
