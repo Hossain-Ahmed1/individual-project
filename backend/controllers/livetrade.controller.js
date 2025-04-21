@@ -47,14 +47,12 @@ export const createLivetrade = async (req,res) => {
 //delete one
 export const deleteLivetrade = async(req,res) =>{
     const {id} = req.params
-    
     if (!mongoose.Types.ObjectId.isValid(id)){
-        return res.status(404).json({sucess: false, message:"invalid item Id"})
-    }
-    try{
+        return res.status(404).json({sucess: false, message:"invalid Id"})
+    } try{
         await Livetrade.findByIdAndDelete(id)
-        res.status(200).json({sucess:true, message:"item deleted"})
-    }catch(err){
-        res.status(500).json({success: false, message:"Server Error"})
+        return res.status(200).json({success: true, message:"deleted"})
+    }catch (err){
+        return res.status(500).json({sucess:false, message: "server error"})
     }
 }

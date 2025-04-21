@@ -16,7 +16,8 @@ export const getLivetrade =  async(id) => {
     return data
 }
 
-export const deleteTradeoffer = async(id) => {
-    const response = await axios.delete(`${URL}/api/livetrade/${id}`,id)
+export const deleteLiveTrade = async(id) => {
+    console.log('del')
+    const response = await axios.delete(`${URL}/api/livetrade/${id}`)
     return response
 }

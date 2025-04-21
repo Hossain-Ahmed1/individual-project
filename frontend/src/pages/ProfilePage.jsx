@@ -5,7 +5,7 @@ import { deleteItem, fetchItems } from '@/api/Item'
 import { jwtDecode } from 'jwt-decode'
 import ItemCard from '../components/ItemCard'
 import { fetchUser } from '@/api/User'
-import { deleteTradeoffer, getTradeoffers } from '@/api/Tradeoffer'
+import { createTrade, deleteTradeoffer, getTradeoffers } from '@/api/Tradeoffer'
 import OfferCard from '@/components/OfferCard'
 import { getLivetrades } from '@/api/Livetrade'
 import InviteCard from '@/components/InviteCard'
@@ -67,7 +67,16 @@ const ProfilePage = () => {
       setSentOffers(sentOffers.filter(offer => offer._id !== id))
       setRecievingOffers(recievingOffers.filter(offer => offer._id !== id))
     }
+    const handleAcceptOffer = async(offer) =>{
+      const trade = {
+        user1:offer.sender,
+        user2:offer.reciever,
+        user1_items:offer.offering,
+        user2_items:offer.wanting
 
+      }
+      const response = await createTrade(trade)
+    }
 
   return (
     <Container >
@@ -117,6 +126,10 @@ const ProfilePage = () => {
                 <HStack>
                   <Button onClick={() => handleDeleteOffer(offer._id)}>refuse offer</Button>
                   <Link to={"/trade/"+offer.sender}><Button>Counter offer</Button></Link>
+                  <Button onClick={() =>{
+                    handleAcceptOffer(offer)
+                    handleDeleteOffer(offer._id)
+                    }}>Accept offer</Button>
                 </HStack>
               </Container> 
               }

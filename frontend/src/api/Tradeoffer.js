@@ -15,3 +15,8 @@ export const deleteTradeoffer = async(id) => {
     const response = await axios.delete(`${URL}/api/trade/${id}`,id)
     return response
 }
+
+export const createTrade = async(trade) => {
+    const response = await axios.post(`${URL}/api/tradedone`,trade)
+    return response
+}
