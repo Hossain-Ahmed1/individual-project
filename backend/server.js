@@ -6,6 +6,7 @@ import userRouter from './routes/user.route.js'
 import tradeofferRouter from './routes/tradeoffer.route.js'
 import livetradeRouter from  './routes/livetrade.route.js'
 import tradeRouter from './routes/trade.route.js'
+import Livetrade from './models/livetrade.model.js'
 import {createServer} from 'http'
 import { Server } from "socket.io";
 
@@ -52,7 +53,8 @@ io.on('connection', (socket) => {
     socket.on('user submited',(data) =>{
         socket.to(data.room).emit('other user submit',data.submit)
     })
-    socket.on('both submited',(data)=>{
+    socket.on('both submited',async(data)=>{
+        const response = await Livetrade.findByIdAndDelete(data.room)
         io.to(data.room).emit('trade done')
         io.in(data.room).socketsLeave(data.room)
     })

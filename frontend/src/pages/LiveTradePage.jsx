@@ -93,6 +93,9 @@ const LiveTradePage = ({socket}) => {
     }
 
   })
+  socket.on('trade done',()=>{
+    navigate('/profile')
+  })
   return (
     <Container>
     <Text>Live trading with: <GetUsername id={otherUser} /></Text>
