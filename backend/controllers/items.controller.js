@@ -4,10 +4,10 @@ import mongoose from "mongoose";
 export const getItems = async (req,res) =>{
     try{
         const items = await Item.find({})
-        res.status(200).json({success: true, data:items})
+        return res.status(200).json({success: true, data:items})
     }catch(err){
         console.log("error in fetching items: ", err.message)
-        res.status(500).json({success:false, message:"Server Error"})
+        return res.status(500).json({success:false, message:"Server Error"})
     }
 }
 

@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon backend/server.js"
+    "dev": "nodemon backend/server.js",
+    "test": "jasmine"
   },
   "repository": {
     "type": "git",
@@ -28,6 +29,7 @@
     "socket.io": "^4.8.1"
   },
   "devDependencies": {
+    "jasmine": "^5.6.0",
     "nodemon": "^3.1.9"
   }
 }
