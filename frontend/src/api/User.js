@@ -2,7 +2,7 @@ import { URL } from "./congig"
 import axios from "axios"
 
 
-
+//get one
 export const fetchUser = async(id) => {
     if (id == ''){
         return ''
@@ -12,6 +12,7 @@ export const fetchUser = async(id) => {
     return data
 }
 
+//make one
 export const registerUser = async (newUser) => {
     const response = await axios.post(`${URL}/api/users`, newUser)
                                     .catch((err) =>{
@@ -25,6 +26,7 @@ export const registerUser = async (newUser) => {
     return response
 }
 
+//login user
 export const loginUser = async(userCred) =>{
     const response = await axios.post(`${URL}/api/users/login`,userCred)
                                 .catch((err) =>{

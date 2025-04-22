@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
-import { CheckboxCard,Heading,Text,Button } from '@chakra-ui/react'
+import { CheckboxCard } from '@chakra-ui/react'
 const CheckboxItemCard = ({item,chosenItems,setChosenItem}) => {
-    const [checked, setChecked] = useState(false)
+    const [checked, setChecked] = useState(false)//controls the state of the check 
+    //adds the item to list of chosen items when checked, removed if not checked
     const addToArr = ()=>{
         if (!checked){setChosenItem([...chosenItems,item._id])}else{setChosenItem(chosenItems.filter(citem => citem !== item._id))}
       }

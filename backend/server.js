@@ -28,7 +28,7 @@ app.use("/api/livetrade", livetradeRouter)
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
     cors: {
-        origin:"http://localhost:5173",
+        origin:"http://localhost:5173",//change this to the url the frontend is deployed on
         methods:["GET","POST","PUT","DELETE"]
     }
 });

@@ -4,12 +4,14 @@ import {io} from "socket.io-client"
 
 const LiveCheckBoxItemCard = ({item,chosenItems,setChosenItem,socket,room,readonly,user}) => {
     const [checked, setChecked] = useState(false)
+    //emits the item to the server based on room
     const emitsItems = (items)=>{
         socket.emit('selected items',{
             selected:items,
             room:room
         })
       }
+    //if this is the user item, then they can add and remove from the list which the list is emmited to the server
     const addToArr = ()=>{
       if (user){
         if (!checked){
@@ -22,7 +24,7 @@ const LiveCheckBoxItemCard = ({item,chosenItems,setChosenItem,socket,room,readon
       }
     }
 
-
+    //if these are not the user item, it listens form the server which items to add and remove from list 
     socket.on("sending items",(data)=>{
       if (!user){
         setChosenItem(data)

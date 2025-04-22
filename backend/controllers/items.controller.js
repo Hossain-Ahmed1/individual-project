@@ -1,6 +1,7 @@
 import Item from "../models/items.model.js";
 import mongoose from "mongoose";
 
+//get all
 export const getItems = async (req,res) =>{
     try{
         const items = await Item.find({})
@@ -28,6 +29,7 @@ export const getItem = async (req,res) =>{
     }
 }
 
+//make one
 export const createItem = async(req,res) =>{
     const item = req.body
 
@@ -47,6 +49,7 @@ export const createItem = async(req,res) =>{
 
 }
 
+//update one
 export const updateItem = async(req,res) =>{
     const {id} = req.params
 
@@ -64,6 +67,7 @@ export const updateItem = async(req,res) =>{
     }
 }
 
+//delete one
 export const deleteItem = async(req,res) =>{
     const {id} = req.params
     
